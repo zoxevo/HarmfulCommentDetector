@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>تشخیص کامنت‌های ناهنجار اینستاگرام</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white text-center">
+            <h3>سیستم تشخیص کامنت‌های ناهنجار</h3>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="mb-3">
+                    <label for="comment" class="form-label">کامنت را وارد کنید:</label>
+                    <textarea class="form-control" id="comment" name="comment" rows="4" required>{{ comment or '' }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">بررسی کن</button>
+            </form>
+
+            {% if prediction %}
+            <div class="alert alert-{{ prediction.color }} mt-4 text-center fw-bold" role="alert">
+                این کامنت: <span class="fs-4">{{ prediction.label }}</span> است!
+            </div>
+            {% endif %}
+        </div>
+        <div class="card-footer text-muted text-center">
+            مدل آموزش دیده روی دیتاست PHICAD - دقت ≈ 87%
+        </div>
+    </div>
+</div>
+</body>
+</html>
