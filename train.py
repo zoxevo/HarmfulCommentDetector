@@ -14,6 +14,8 @@ df = pd.read_csv('phicad_clean.csv', encoding='utf-8')
 X = df['comment_normalized'].fillna('')
 y = df['class']
 
+print(df.shape)
+print(df['class'].value_counts())
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
@@ -21,11 +23,12 @@ print(f"تعداد train: {len(X_train)}, test: {len(X_test)}")
 
 
 pipeline = Pipeline([
-    ('tfidf', TfidfVectorizer(ngram_range=(1, 3), max_features=50000, min_df=2, lowercase=False)),
-    ('clf', LogisticRegression(multi_class='multinomial', solver='lbfgs', max_iter=1000, class_weight='balanced', n_jobs=-1))
+    ('tfidf', TfidfVectorizer(ngram_range=(1, 3), max_features=150000, min_df=2, lowercase=False)),
+    ('clf', LogisticRegression(solver='lbfgs', max_iter=4000, class_weight='balanced', ))
 ])
 
 print("شروع train... (۵-۱۵ دقیقه طول می‌کشه)")
+print(len(X_train), len(X_test))
 pipeline.fit(X_train, y_train)
 
 # تست مدل
