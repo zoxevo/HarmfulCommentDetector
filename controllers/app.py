@@ -36,10 +36,15 @@ def index():
     if request.method == 'POST':
         comment = request.form['comment']
         if comment.strip():
-            pred = pipeline.predict([comment])[0]
+            pred_class = pipeline.predict([comment])[0]
+            pred_proba = pipeline.predict_proba([comment])[0]
+            max_proba = round(max(pred_proba) * 100, 1)
+        
             prediction = {
-                'label': persian_label.get(pred, pred),
-                'color': color_map.get(pred, 'secondary')
+                'label': persian_label.get(pred_class, pred_class),
+                'color': color_map.get(pred_class, 'secondary'),
+                'english': pred_class,
+                'max_proba': max_proba
             }
     return render_template('index.html', prediction=prediction, comment=comment)
 

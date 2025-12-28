@@ -3,34 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>تشخیص کامنت‌های ناهنجار اینستاگرام</title>
+    <title>نگار ناهنجار</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vazir-font@30.0.0/dist/font-face.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background: #fafafa;
+            min-height: 100vh;
+            font-family: 'Vazir', system-ui, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+        }
+        .header {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+        .subtitle {
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+        .input-section {
+            padding: 2rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .form-control {
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-size: 1.1rem;
+        }
+        .btn-primary {
+            background: #1a1a1a;
+            border: 1px solid #1a1a1a;
+            border-radius: 0.5rem;
+            color: white;
+            padding: 0.8rem 2rem;
+            font-weight: bold;
+        }
+        .btn-primary:hover {
+            background: #000;
+        }
+        .result-section {
+            padding: 2rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        .proba-large {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+        .proba-text {
+            color: #6b7280;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .suggestion-text {
+            color: #6b7280;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .label-main {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+        .english-label {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-top: 1rem;
+        }
+        .footer {
+            text-align: center;
+            padding: 1rem;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
-<body class="bg-light">
-<div class="container mt-5">
-    <div class="card shadow">
-        <div class="card-header bg-primary text-white text-center">
-            <h3>سیستم تشخیص کامنت‌های ناهنجار</h3>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="logo">نگار ناهنجار</h1>
+            <p class="subtitle">تشخیص هوشمند ناهنجاری در نظرات و متون فارسی</p>
         </div>
-        <div class="card-body">
+
+        <div class="input-section">
             <form method="post">
                 <div class="mb-3">
-                    <label for="comment" class="form-label">کامنت را وارد کنید:</label>
-                    <textarea class="form-control" id="comment" name="comment" rows="4" required>{{ comment or '' }}</textarea>
+                    <textarea class="form-control" name="comment" rows="5" placeholder="نظر یا متن خود را اینجا بنویسید..." required>{{ comment or '' }}</textarea>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">بررسی کن</button>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">
+                        تشخیص ناهنجاری
+                    </button>
+                </div>
             </form>
-
-            {% if prediction %}
-            <div class="alert alert-{{ prediction.color }} mt-4 text-center fw-bold" role="alert">
-                این کامنت: <span class="fs-4">{{ prediction.label }}</span> است!
-            </div>
-            {% endif %}
         </div>
-        <div class="card-footer text-muted text-center">
-            مدل آموزش دیده روی دیتاست PHICAD - دقت ≈ 87%
+
+        {% if prediction %}
+        <div class="result-section">
+            <div class="proba-large">{{ prediction.max_proba }}%</div>
+            <div class="proba-text">احتمال ناهنجاری</div>
+            <div class="suggestion-text">پیشنهاد مدل:</div>
+            <div class="label-main">{{ prediction.label }}</div>
+            <div class="english-label">
+                (کلاس اصلی: <code>{{ prediction.english }}</code>)
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="footer">
+            مدل آموزش دیده روی دیتاست فارسی • دقت ≈ ۸۸.۳%
         </div>
     </div>
-</div>
 </body>
 </html>
